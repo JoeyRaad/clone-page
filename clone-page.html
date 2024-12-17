@@ -1,0 +1,695 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OpenAI Clone</title>
+    <style>
+        /* General Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #000000;
+            margin: 0;
+        }
+
+        /* here there is header style    */
+
+        /* Header */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  background-color: #fff;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  position: fixed;
+  width: 100%;
+  z-index: 10;
+}
+
+.header-left {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.menu {
+  display: flex;
+  gap: 20px;
+}
+
+.menu-item {
+  cursor: pointer;
+  padding: 10px 15px;
+  position: relative;
+}
+
+.menu-item:hover {
+  background-color: rgba(255, 255, 255, 0.7);
+  border-radius: 8px;
+}
+
+/* Submenu */
+.submenu {
+  display: none;
+  position: absolute;
+  top: 60px;
+  left: 0;
+  width: auto;
+  height: auto;
+  background: #fff;
+  z-index: 5;
+  justify-content: left;
+  align-items: left;
+}
+
+.submenu-content {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 50px;
+  text-align: center;
+}
+
+.column {
+  background: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
+}
+
+/* Overlay */
+#overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.7);
+  z-index: 8;
+}
+
+#search-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.9);
+  z-index: 15;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.search-box {
+  background: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  display: flex;
+  gap: 10px;
+}
+
+.search-box input {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.search-box button {
+  padding: 10px 20px;
+  background: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+        .hero {
+            background: #fff;
+            color: #0e0e0e;
+            text-align: center;
+            padding: 100px 20px;
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+        }
+
+        .hero p {
+            margin-top: 20px;
+            font-size: 1.1rem;
+        }
+
+        .content {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 20px;
+        }
+
+        .content h2 {
+            margin-bottom: 20px;
+            font-size: 2rem;
+        }
+
+        .content p {
+            margin-bottom: 20px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .grid div {
+            background: #f4f4f4;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Footer Styles */
+footer {
+    background-color: #f4f4f4;
+    color: #000;
+    padding: 40px 20px 20px;
+}
+
+.footer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.footer-top {
+    /*display: flex; */
+    flex-wrap: wrap;
+    justify-content: space-between;
+    border-bottom: 1px solid #444;
+    padding-bottom: 20px;
+}
+
+.footer-logo h2 {
+    font-size: 1.5rem;
+    color: #fff;
+}
+
+.footer-links {
+    display: flex;
+    gap: 40px;
+}
+
+.link-section h3 {
+    font-size: 1rem;
+    margin-bottom: 10px;
+    color: #ddd;
+}
+
+.link-section ul {
+    list-style: none;
+}
+
+.link-section ul li {
+    margin: 5px 0;
+}
+
+.link-section ul li a {
+    color: #aaa;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.link-section ul li a:hover {
+    color: #fff;
+}
+
+/* Bottom Footer */
+.footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+    flex-wrap: wrap;
+}
+
+.footer-social a {
+    color: #aaa;
+    text-decoration: none;
+    margin: 0 10px;
+    transition: color 0.3s ease;
+}
+
+.footer-social a:hover {
+    color: #fff;
+}
+
+.footer-copyright {
+    color: #aaa;
+}
+
+        /*
+        footer {
+            background: #000;
+            color: #fff;
+            text-align: center;
+            padding: 20px;
+        }
+
+        footer p {
+            font-size: 0.9rem;
+        }
+        */
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+            }
+
+            header nav ul {
+                margin-top: 10px;
+                flex-direction: column;
+            }
+
+            header nav ul li {
+                margin-left: 0;
+                margin-top: 10px;
+            }
+        }
+    </style>
+    <style>
+        /* styles.css */
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        overflow-x: hidden;
+      }
+      
+      .slideshow {
+        display: flex;
+        flex-direction: row;
+        overflow-x: scroll;
+        scroll-snap-type: x mandatory;
+        -webkit-overflow-scrolling: touch;
+      }
+      
+      .slide {
+        flex: 0 0 50%; /* Adjust to change slide width */
+        scroll-snap-align: start;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 20px;
+        box-sizing: border-box;
+        border: 2px solid #eaeaea; /* Add border */
+        margin: 10px;
+        min-height: 300px;
+        background-color: #f9f9f9;
+        transition: transform 0.3s ease;
+      }
+      
+      .slide-content {
+        flex: 1;
+        padding-right: 20px;
+      }
+      
+      .slide img {
+        flex: 1;
+        max-width: 50%;
+        height: auto;
+      }
+      
+      .slide h2 {
+        font-size: 24px;
+        margin-bottom: 10px;
+      }
+      
+      .slide p {
+        font-size: 16px;
+        color: #555;
+      }
+      
+      /* Optional: Hover Effect */
+      .slide:hover {
+        transform: scale(1.02);
+      }
+
+      /* Style for the button container */
+      
+      
+      /* Main button styles */
+      .start-now-button {
+        display: inline-block;
+        padding: 12px 24px; /* Add space around the text */
+        background: linear-gradient(90deg, #0c0c0c, #0c0c0c); /* Gradient background */
+        color: white; /* Text color */
+        text-decoration: none; /* Remove underline from links */
+        font-size: 16px; /* Text size */
+        font-weight: bold; /* Bold text */
+        text-align: center; /* Center text */
+        border-radius: 8px; /* Rounded corners */
+        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+        transition: all 0.3s ease; /* Smooth hover effect */
+        }
+
+        /* Hover effect */
+      .start-now-button:hover {
+        background: linear-gradient(90deg, #5a6061, #6c7174); /* Slight gradient shift */
+        transform: translateY(-2px); /* Move the button up slightly */
+        box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.15); /* Enhance shadow on hover */
+        }
+   
+      
+    </style>
+</head>
+<body>
+    
+    <!-- Header -->
+  <header class="header">
+    <div class="header-left">OpenAI</div>
+    <nav class="menu">
+      <div class="menu-item" data-submenu="submenu1">Research</div>
+      <div class="menu-item" data-submenu="submenu2">Products</div>
+      <div class="menu-item"                        >Safety</div>
+      <div class="menu-item" data-submenu="submenu3">Company</div>
+    </nav>
+    <div class="header-right">
+      <button id="search-button">
+        <Search>Search</Search>
+      </button>
+    </div>
+  </header>
+
+  <!-- Submenus -->
+  <div class="submenu" id="submenu1">
+    <div class="submenu-content">
+      <div class="column">Our Research<br><br><br>Overview<br><br><br>Index</div>
+      <div class="column">Latetnt Advancments<br><br><br>OpenAI o1<br><br><br>OpenAI-o1<br><br><br>
+      GPT-4o<br><br><br>GPT-4o mini<br><br><br>DALLE 3<br><br><br>Sora</div>
+      <div class="column"> <img src="images/systemcard.jpeg" style="height: 100px;width: 200px ">OpenAI o1 Hub</div>
+    </div>
+  </div>
+  <div class="submenu" id="submenu2">
+    <div class="submenu-content">
+      <div class="column">ChatGPT<br><br><br>Overview<br><br><br>For Teams<br><br><br>For Enterprises
+        <br><br><br>For Education<br><br><br>Pricing<br><br><br>ChatGPT login</div>
+      <div class="column">API<br><br><br>Overview<br><br><br>Pricing<br><br><br>Documentation(opens in a new window)
+        <br><br><br>API login</div>
+      <div class="column">Sora<br><br><br>Overview<br><br><br>Features<br><br><br>Pricing
+        <br><br><br>Help center(opens in a new window)<br><br><br>Sora login</div>
+      <div class="column">Explore more<br><br><br>OpenAI for business<br><br><br>Stories</div>
+      <div class="column"> <img src="images/sora.jpeg" style="height: 100px;width: 200px ">Introducing Sora</div>
+    </div>
+  </div>
+  <div class="submenu" id="submenu3">
+    <div class="submenu-content">
+      <div class="column">About us<br><br><br>Our Charter<br><br><br>Residency</div>
+      <div class="column">News<br><br><br>Security and Privacy<br><br><br>Careers</div>
+      <div class="column"> <img src="images/systemcard.jpeg" style="height: 100px;width: 200px ">OpenAI o1 Hub</div>
+    </div>
+  </div>
+
+  <!-- Overlay -->
+  <div id="overlay"></div>
+  <div id="search-overlay">
+    <div class="search-box">
+      <input type="text" placeholder="Search...">
+      <button>Search</button>
+    </div>
+  </div>
+
+    <section class="hero">
+        <h1>Welcome to OpenAI</h1>
+        <p>Empowering the world with AI technologies</p>
+    </section>
+
+    <section class="content">
+        <h2>Our Services</h2>
+        <div class="grid">
+            <div id="home">
+                <h3>Building the Future of AI</h3>
+                <p>Explore how OpenAI is shaping the future with cutting-edge artificial
+                intelligence technologies and tools.</p>
+                <div>
+            </div>
+
+            <div id="about">
+                <h3>About OpenAI</h3>
+                <p>OpenAI is dedicated to creating artificial intelligence that benefits 
+                humanity, ensuring AI systems are safe, ethical, and powerful.</p>
+            </div>
+      
+            <div id="services">
+                <h3>Our Features</h3>
+                <p>Discover a variety of AI-driven solutions, including natural language processing, machine learning models, and more.</p>
+            </div>
+            
+            <div id="contact">
+              <h3>Contact Us</h3>
+              <p>Have questions or feedback? Reach out to us to learn more about our work and mission.</p
+            </div>
+        
+        </div>
+
+        <div class="slideshow">
+            <div class="slide">
+              <div class="slide-content">
+                <h2>Canvas</h2>
+                <p>Discover all the possibilities of canvas, an interface for writing and coding 
+                    in collaboration with ChatGPT that we launched this past October.</p>
+                <div class="button-container" style=" box-shadow: none !important;">
+                <a href="#" class="start-now-button">Learn more</a>
+                </div>       
+              </div>
+              <img src="images/canvas.jpeg" alt="Image 1"> 
+            </div>
+            
+            <div class="slide">
+              <div class="slide-content">
+                <h2>Sora</h2>
+                <p>Create videos in various formats, generate new content from text, or enhance,
+                    remix, and blend your own assets.</p>
+                <div class="button-container" style=" box-shadow: none !important;">
+                <a href="#" class="start-now-button">Learn more</a>
+                </div>  
+              </div>
+              <img src="images/sora.jpeg" alt="Image 2">
+            </div>
+
+            <div class="slide">
+                <div class="slide-content">
+                  <h2>Sora is here</h2>
+                  <p>We are moving our video generation model out of research preview.</p>
+                  <div class="button-container" style=" box-shadow: none !important;">
+                  <a href="#" class="start-now-button">Learn more</a>
+                  </div>       
+                </div>
+                <img src="images/sorahere.jpeg" alt="Image 3"> 
+              </div>
+
+              <div class="slide">
+                <div class="slide-content">
+                  <h2>Sora System Card</h2>
+                  <p>Sora builds on learnings from DALL-E and GPT models, and is designed 
+                  to give people expanded tools for storytelling and creative expression.</p>
+                  <div class="button-container" style=" box-shadow: none !important;">
+                  <a href="#" class="start-now-button">Learn more</a>
+                  </div>       
+                </div>
+                <img src="images/sorasystem.jpeg" alt="Image 4"> 
+              </div>
+
+              <div class="slide">
+                <div class="slide-content">
+                  <h2>Fine-Tuning</h2>
+                  <p>We're expanding alpha access to Reinforcement Fine-Tuning and inviting 
+                    researchers, universities, and enterprises. Spots are limited.</p>
+                  <div class="button-container" style=" box-shadow: none !important;">
+                  <a href="#" class="start-now-button">Learn more</a>
+                  </div>       
+                </div>
+                <img src="images/finetuning.jpeg" alt="Image 1"> 
+              </div>
+
+              <div class="slide">
+                <div class="slide-content">
+                  <h2>Introducing ChatGPT Pro</h2>
+                  <p>Broadening usage of frontier AI.</p>
+                  <div class="button-container" style=" box-shadow: none !important;">
+                  <a href="#" class="start-now-button">Learn more</a>
+                  </div>       
+                </div>
+                <img src="images/chatgpt.jpeg" alt="Image 1"> 
+              </div>
+
+              <div class="slide">
+                <div class="slide-content">
+                  <h2>o1 System Card</h2>
+                  <p>The updated OpenAI o1 system card builds on prior safety work, 
+                    highlighting robustness evals, red teaming insights, and safety improvements.</p>
+                  <div class="button-container" style=" box-shadow: none !important;">
+                  <a href="#" class="start-now-button">Learn more</a>
+                  </div>       
+                </div>
+                <img src="images/systemcard.jpeg" alt="Image 1"> 
+              </div>
+
+
+              
+            <!-- Add more slides as needed -->
+          </div>
+          <div>
+            <h1 style="display:grid;text-align: center;size: 40px;">Instant answers. Greater productivity.
+                 Endless inspiration.<br><div class="button-container" style=" box-shadow: none !important;">
+                    <a href="#" class="start-now-button">Try ChatGPT</a>
+                    </div>   
+            </h1>
+          </div>
+    </section>
+
+ 
+    <footer>
+        <div class="footer-container">
+            <div class="footer-top">
+                <div class="footer-logo">
+                    
+                </div>
+                <div class="footer-links">
+                    <div class="link-section">
+                        <h3>Our Research</h3>
+                        <ul>
+                            <li><a href="#">Overview</a></li>
+                            <li><a href="#">Index</a></li> </ul>
+                        <h3>Latest advancements</h3>  
+                        <ul>
+                            <li><a href="#">OpenAI o1</a></li>
+                            <li><a href="#">OpenAI o1-mini</a></li>
+                            <li><a href="#">GPT-4</a></li>
+                            <li><a href="#">GPT-4o mini</a></li>
+                            <li><a href="#">DALL·E 3</a></li>
+                            <li><a href="#">Sora</a></li>
+                        </ul>
+                    </div>
+                    
+                    <div class="link-section">
+                        <h3>ChatGPT</h3>
+                        <ul>
+                            <li><a href="#">For Everyone</a></li>
+                            <li><a href="#">For Teams</a></li>
+                            <li><a href="#">For Enterprises</a></li>
+                            <li><a href="#">ChatGPT login</a></li>
+                            <li><a href="#">Download</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="link-section">
+                        <h3>API</h3>
+                        <ul>
+                            <li><a href="#">Platform overview</a></li>
+                            <li><a href="#">Pricing</a></li>
+                            <li><a href="#">Documentation</a></li>
+                            <li><a href="#">API Login</a></li>
+                        </ul>
+                    </div>
+                    
+                    <div class="link-section">
+                        <h3>Explore more</h3>
+                        <ul>
+                            <li><a href="#">OpenAI for business</a></li>
+                            <li><a href="#">Stories</a></li>
+                        </ul>
+                    </div>
+                    
+                    <div class="link-section">
+                        <h3>Safety overview</h3>
+                        <ul>
+                            <li><a href="#">Safety overview</a></li>
+                    </div>
+                    
+                    <div class="link-section">
+                        <h3>Company</h3>
+                        <ul>
+                            <li><a href="#">About us</a></li>
+                            <li><a href="#">News</a></li>
+                            <li><a href="#">Our Charter</a></li>
+                            <li><a href="#">Security</a></li>
+                            <li><a href="#">Residency</a></li>
+                            <li><a href="#">Careers</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="link-section">
+                        <h3>Terms & Policies</h3>
+                        <ul>
+                            <li><a href="#">Terms of use</a></li>
+                            <li><a href="#">Privacy policy</a></li>
+                            <li><a href="#">Brand guidelines</a></li>
+                            <li><a href="#">Other policies</a></li>
+                        </ul>
+                    </div>   
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <div class="footer-copyright">
+                    <p>&copy; 2024 OpenAI. All rights reserved.</p>
+                </div>
+                <div class="footer-social">
+                    <a href="#">Twitter</a>
+                    <a href="#">YouTube</a>
+                    <a href="#">LinkedIn</a>
+                    <a href="#">GitHub</a>
+                    <a href="#">Instagram</a>
+                    <a href="#">TikTok</a>
+                    <a href="#">Discord</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>
+<script>
+const searchButton = document.getElementById('search-button');
+const searchOverlay = document.getElementById('search-overlay');
+const overlay = document.getElementById('overlay');
+const menuItems = document.querySelectorAll('.menu-item');
+const submenus = document.querySelectorAll('.submenu');
+
+searchButton.addEventListener('click', () => {
+  searchOverlay.style.display = 'flex';
+});
+
+searchOverlay.addEventListener('click', (e) => {
+  if (e.target === searchOverlay) {
+    searchOverlay.style.display = 'none';
+  }
+});
+
+menuItems.forEach(item => {
+  item.addEventListener('mouseenter', () => {
+    overlay.style.display = 'block';
+    const submenu = document.getElementById(item.dataset.submenu);
+    submenu.style.display = 'flex';
+  });
+
+  item.addEventListener('mouseleave', () => {
+    overlay.style.display = 'none';
+    submenus.forEach(submenu => submenu.style.display = 'none');
+  });
+});
+
+overlay.addEventListener('mouseleave', () => {
+  overlay.style.display = 'none';
+  submenus.forEach(submenu => submenu.style.display = 'none');
+});
+
+</script>
